@@ -1,152 +1,256 @@
 <!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shreshth Swad - Authentic Bihar Thekua</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <style>
-        /* Same CSS from your code with brand colors */
-        :root {
-            --primary-red: #D62828;
-            --dark-red: #9D0208;
-            --maroon: #800020;
-            --black: #03071E;
-            --yellow: #FAA307;
-            --green: #2E8B57;
-            --light-bg: #FFF5EE;
-        }
-        body { background: var(--light-bg); font-family: 'Poppins', sans-serif; }
-        /* Keep rest of your CSS unchanged */
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shreshth Swad - Authentic Bihar Thekua</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+    :root {
+      --primary-red: #D62828;
+      --dark-red: #9D0208;
+      --maroon: #800020;
+      --black: #03071E;
+      --yellow: #FAA307;
+      --green: #2E8B57;
+      --light-bg: #FFF5EE;
+    }
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {background:var(--light-bg);font-family:'Poppins',sans-serif;color:var(--black);line-height:1.6;}
+    a {text-decoration:none;color:inherit;}
+    ul {list-style:none;}
+    .container {width:90%;max-width:1200px;margin:auto;}
+    header {background:var(--primary-red);padding:15px 0;position:sticky;top:0;z-index:1000;}
+    .header-content {display:flex;align-items:center;justify-content:space-between;}
+    .logo h1 {color:#fff;font-size:26px;}
+    .logo span {color:var(--yellow);}
+    .tagline {color:#fff;font-size:14px;margin-top:2px;}
+    nav ul {display:flex;gap:20px;}
+    nav ul li a {color:#fff;font-weight:500;transition:.3s;}
+    nav ul li a:hover {color:var(--yellow);}
+    .cart-icon {color:#fff;font-size:20px;cursor:pointer;position:relative;}
+    .cart-count {position:absolute;top:-8px;right:-8px;background:var(--yellow);color:#000;font-size:12px;padding:2px 6px;border-radius:50%;}
+    .hero {height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;background:url('thekua-hero.jpg') center/cover no-repeat;}
+    .hero-content {background:rgba(0,0,0,0.5);padding:20px;border-radius:12px;}
+    .hero-content h2 {color:#fff;font-size:42px;margin-bottom:10px;}
+    .hero-content p {color:#f1f1f1;font-size:18px;margin-bottom:20px;}
+    .btn {display:inline-block;padding:10px 20px;background:var(--yellow);color:#000;font-weight:600;border-radius:6px;transition:.3s;}
+    .btn:hover {background:#fff;color:var(--dark-red);}
+    .section-title {text-align:center;font-size:28px;margin:50px 0 20px;color:var(--dark-red);}
+    .product-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+    .product-card {background:#fff;padding:15px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);transition:.3s;}
+    .product-card:hover {transform:translateY(-5px);}
+    .product-card img {width:100%;border-radius:12px;height:200px;object-fit:cover;}
+    .product-card h3 {margin:10px 0;font-size:20px;color:var(--maroon);}
+    .product-card p {font-size:14px;margin-bottom:10px;}
+    .price {font-weight:600;color:var(--dark-red);margin-bottom:10px;}
+    .add-to-cart {padding:8px 15px;background:var(--green);color:#fff;border:none;border-radius:6px;cursor:pointer;transition:.3s;}
+    .add-to-cart:hover {background:#246b45;}
+    .reviews {background:#fff;padding:50px 0;}
+    .review-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+    .review-card {background:var(--light-bg);padding:20px;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);}
+    .review-text {font-style:italic;margin-bottom:10px;}
+    .reviewer {display:flex;align-items:center;gap:10px;}
+    .reviewer-img {width:50px;height:50px;border-radius:50%;}
+    footer {background:var(--black);color:#fff;padding:30px 0;}
+    .footer-content {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+    .footer-section h3 {margin-bottom:10px;color:var(--yellow);}
+    .footer-section p,.footer-section li {font-size:14px;}
+    .social-icons a {margin-right:10px;color:#fff;font-size:18px;}
+    .copyright {text-align:center;margin-top:20px;font-size:14px;}
+    .cart-modal {position:fixed;top:0;right:-100%;width:350px;height:100%;background:#fff;box-shadow:-4px 0 10px rgba(0,0,0,0.2);transition:.4s;z-index:2000;display:flex;flex-direction:column;}
+    .cart-modal.active {right:0;}
+    .cart-header {display:flex;justify-content:space-between;align-items:center;padding:15px;background:var(--primary-red);color:#fff;}
+    .cart-items {flex:1;overflow-y:auto;padding:15px;}
+    .cart-item {display:flex;align-items:center;gap:10px;margin-bottom:15px;}
+    .cart-item img {width:60px;height:60px;border-radius:6px;object-fit:cover;}
+    .cart-total {padding:15px;font-weight:600;font-size:16px;}
+    .checkout-btn {margin:0 15px 15px;padding:10px;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:16px;cursor:pointer;}
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <h1>Shreshth <span>Swad</span></h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#reviews">Reviews</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="cart-icon" id="cartIcon">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
-            </div>
-        </div>
-    </header><!-- Hero Section -->
-<section class="hero" style="background:url('your_thekua_banner_image.jpg') center/cover no-repeat;">
-    <div class="container hero-content">
-        <h2>Authentic Bihar Thekua</h2>
-        <p>Traditional taste of Mithila & Bhojpuri culture, made with purity and love</p>
-        <a href="#products" class="btn">Order Now</a>
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <h1>Shreshth <span>Swad</span></h1>
+        <p class="tagline">Swad Jo Yaad Rahe</p>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="cart-icon" id="cartIcon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
     </div>
-</section>
-
-<!-- Products Section -->
-<section class="products" id="products">
+  </header>  <section class="hero">
+    <div class="hero-content">
+      <h2>Authentic Bihar Thekua</h2>
+      <p>Traditional taste of Mithila & Bhojpuri culture, made with purity and love</p>
+      <a href="#products" class="btn">Order Now</a>
+    </div>
+  </section>  <section class="products" id="products">
     <div class="container">
-        <h2 class="section-title">Our Thekua Variants</h2>
-        <div class="product-grid" id="productGrid"></div>
+      <h2 class="section-title">Our Thekua Variants</h2>
+      <div class="product-grid" id="productGrid"></div>
     </div>
-</section>
-
-<!-- Reviews Section -->
-<section class="reviews" id="reviews">
+  </section>  <section class="reviews" id="reviews">
     <div class="container">
-        <h2 class="section-title">What Our Customers Say</h2>
-        <div class="review-grid">
-            <div class="review-card">
-                <p class="review-text">“Shreshth Swad’s Thekua reminded me of my village fairs. Pure, crunchy and soulful taste!”</p>
-                <div class="reviewer">
-                    <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Customer" class="reviewer-img">
-                    <div>
-                        <p class="reviewer-name">Amit Kumar</p>
-                        <p>Patna</p>
-                    </div>
-                </div>
+      <h2 class="section-title">What Our Customers Say</h2>
+      <div class="review-grid">
+        <div class="review-card">
+          <p class="review-text">“Shreshth Swad’s Thekua reminded me of my village fairs. Pure, crunchy and soulful taste!”</p>
+          <div class="reviewer">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Customer" class="reviewer-img">
+            <div>
+              <p class="reviewer-name">Amit Kumar</p>
+              <p>Patna</p>
             </div>
-            <div class="review-card">
-                <p class="review-text">“The packaging was neat and hygienic. My kids loved the Coconut Suji Magic Thekua!”</p>
-                <div class="reviewer">
-                    <img src="https://randomuser.me/api/portraits/women/35.jpg" alt="Customer" class="reviewer-img">
-                    <div>
-                        <p class="reviewer-name">Neha Singh</p>
-                        <p>Delhi</p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="review-card">
+          <p class="review-text">“The packaging was neat and hygienic. My kids loved the Coconut Suji Magic Thekua!”</p>
+          <div class="reviewer">
+            <img src="https://randomuser.me/api/portraits/women/35.jpg" alt="Customer" class="reviewer-img">
+            <div>
+              <p class="reviewer-name">Neha Singh</p>
+              <p>Delhi</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
-
-<!-- Footer -->
-<footer>
+  </section>  <footer>
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>About Us</h3>
-                <p>Shreshth Swad brings you the most authentic taste of Bihar’s traditional snack – Thekua. Handmade with love, using pure ingredients, no preservatives.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#reviews">Reviews</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Patna, Bihar</p>
-                <p><i class="fas fa-phone"></i> +91 9876543210</p>
-                <p><i class="fas fa-envelope"></i> info@shreshthswad.com</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>Shreshth Swad brings you the most authentic taste of Bihar’s traditional snack – Thekua. Handmade with love, using pure ingredients, no preservatives.</p>
         </div>
-        <div class="copyright">
-            <p>&copy; 2025 Shreshth Swad. All Rights Reserved.</p>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
         </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p><i class="fas fa-map-marker-alt"></i> Patna, Bihar</p>
+          <p><i class="fas fa-phone"></i> +91 9876543210</p>
+          <p><i class="fas fa-envelope"></i> info@shreshthswad.com</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Shreshth Swad. All Rights Reserved.</p>
+      </div>
     </div>
-</footer>
-
-<!-- Cart Modal -->
-<div class="cart-modal" id="cartModal">
+  </footer>  <div class="cart-modal" id="cartModal">
     <div class="cart-header">
-        <h3>Your Cart</h3>
-        <span class="close-cart" id="closeCart">&times;</span>
+      <h3>Your Cart</h3>
+      <span class="close-cart" id="closeCart">&times;</span>
     </div>
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-total" id="cartTotal">Total: ₹0</div>
     <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
-</div>
-
-<script>
-    // Product Data - Thekua Variants
+  </div>  <script>
     const products = [
-        { id: 1, name: "Classic Thekua 250g", price: 199, image: "your_thekua_image1.jpg", description: "Traditional Bihar Thekua made with wheat flour, jaggery & ghee." },
-        { id: 2, name: "Classic Thekua 500g", price: 349, image: "your_thekua_image2.jpg", description: "Perfect family pack with authentic taste of Bihar." },
-        { id: 3, name: "Coconut Suji Magic 250g", price: 249, image: "your_thekua_image3.jpg", description: "Fusion of suji & coconut for a delightful crunch." },
-        { id: 4, name: "Premium Dry Fruit Thekua 500g", price: 499, image: "your_thekua_image4.jpg", description: "Rich Thekua loaded with cashews & raisins." },
-        { id: 5, name: "Family Combo 1Kg", price: 699, image: "your_thekua_image5.jpg", description: "Best value pack for family & festivals." }
+      { id: 1, name: "Classic Thekua 250g", price: 199, image: "thekua1.jpg", description: "Traditional Bihar Thekua made with wheat flour, jaggery & ghee." },
+      { id: 2, name: "Classic Thekua 500g", price: 349, image: "thekua2.jpg", description: "Perfect family pack with authentic taste of Bihar." },
+      { id: 3, name: "Coconut Suji Magic 250g", price: 249, image: "thekua3.jpg", description: "Fusion of suji & coconut for a delightful crunch." },
+      { id: 4, name: "Premium Dry Fruit Thekua 500g", price: 499, image: "thekua4.jpg", description: "Rich Thekua loaded with cashews & raisins." },
+      { id: 5, name: "Family Combo 1Kg", price: 699, image: "thekua5.jpg", description: "Best value pack for family & festivals." }
     ];
 
-    // Keep rest of your cart/checkout script unchanged
-</script>
+    const productGrid = document.getElementById("productGrid");
+    const cartIcon = document.getElementById("cartIcon");
+    const cartModal = document.getElementById("cartModal");
+    const closeCart = document.getElementById("closeCart");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+    const cartCount = document.getElementById("cartCount");
+    const checkoutBtn = document.getElementById("checkoutBtn");
 
-</body>
+    let cart = [];
+
+    function renderProducts() {
+      productGrid.innerHTML = "";
+      products.forEach(p => {
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+          <div class="price">₹${p.price}</div>
+          <button class="add-to-cart" onclick="addToCart(${p.id})">Add to Cart</button>
+        `;
+        productGrid.appendChild(card);
+      });
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      cart.push(product);
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItems.innerHTML = "";
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price;
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div>
+            <h4>${item.name}</h4>
+            <p>₹${item.price}</p>
+          </div>
+        `;
+        cartItems.appendChild(div);
+      });
+      cartTotal.innerText = `Total: ₹${total}`;
+      cartCount.innerText = cart.length;
+    }
+
+    cartIcon.addEventListener("click", () => cartModal.classList.add("active"));
+    closeCart.addEventListener("click", () => cartModal.classList.remove("active"));
+
+    checkoutBtn.addEventListener("click", () => {
+      const amount = cart.reduce((sum, item) => sum + item.price, 0) * 100;
+      var options = {
+        key: "rzp_test_yourkey",
+        amount: amount,
+        currency: "INR",
+        name: "Shreshth Swad",
+        description: "Thekua Order",
+        handler: function (response) {
+          alert("Payment Successful! ID: " + response.razorpay_payment_id);
+        },
+        prefill: { name: "", email: "", contact: "" },
+        theme: { color: "#D62828" }
+      };
+      var rzp = new Razorpay(options);
+      rzp.open();
+    });
+
+    renderProducts();
+  </script></body>
 </html>
